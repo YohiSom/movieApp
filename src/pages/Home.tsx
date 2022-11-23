@@ -1,12 +1,13 @@
-import React from 'react'
-import TOC from '../components/TOC/TOC'
+import React from "react";
+import TOC from "../components/TOC/TOC";
+import "./home.css";
 
 function Home() {
   return (
-    <div>
-        <TOC/>
+    <div className="home">
+      <TOC />
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
