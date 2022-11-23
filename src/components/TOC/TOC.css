@@ -1,0 +1,20 @@
+.movies-list {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  height: 500px;
+  justify-content: space-between;
+}
+
+.movie {
+  display: flex;
+}
+
+.star {
+  margin-right: 10px;
+  margin-top: 3px;
+}
+
+.hover-movie {
+  cursor: pointer;
+}
