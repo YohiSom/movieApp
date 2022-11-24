@@ -4,24 +4,28 @@ import { Movies } from "../../assets/interfaces";
 import "./TOC.css";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import MovieDetail from "../movieDetail/MovieDetail";
+import { json } from "stream/consumers";
 
 const TOC: React.FC = () => {
+  const localStorageFavourites = JSON.parse(
+    localStorage.getItem("favouriteMovies") || "[]"
+  );
   const [movies, setMovies] = useState<Movies[]>([]);
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [favouriteMovie, setFavouriteMovie] = useState<Movies[]>([]);
+  const [favouriteMovie, setFavouriteMovie] = useState<any[]>(
+    localStorageFavourites || []
+  );
 
   const [movie, setMovie] = useState<Movies>();
-
-  let localStorageFavourites: Movies[];
 
   const getAllMovies = async () => {
     try {
       const res = await moviesApi();
 
-      const movies = res.map((el: {}) => ({ ...el, isFavourite }));
-      setMovie(movies[0]);
-      setMovies(movies);
+      //   const movies = res.map((el: {}) => ({ ...el, isFavourite }));
+
+      setMovies(res);
       setIsLoading(false);
     } catch (err) {
       console.log(err);
@@ -31,6 +35,12 @@ const TOC: React.FC = () => {
   useEffect(() => {
     getAllMovies();
   }, []);
+
+  useEffect(() => {
+    if (movies) {
+      setMovie(movies[0]);
+    }
+  }, [movies]);
 
   console.log(movies);
 
@@ -42,10 +52,16 @@ const TOC: React.FC = () => {
   };
 
   const selectFavourite = () => {
-    setFavouriteMovie([...favouriteMovie, movie]);
+    const movieId = movie?.episode_id;
+    setFavouriteMovie([...favouriteMovie, movieId]);
   };
 
-  console.log(movie);
+  useEffect(() => {
+    if (favouriteMovie.length !== 0)
+      localStorage.setItem("favouriteMovies", JSON.stringify(favouriteMovie));
+  }, [favouriteMovie]);
+
+  //   console.log(movie);
 
   if (isLoading || movies === undefined) return <div>Loading...</div>;
 
