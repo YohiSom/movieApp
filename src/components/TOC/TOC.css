@@ -21,3 +21,12 @@
 .hover-movie {
   cursor: pointer;
 }
+
+.movie-wrapper {
+  display: flex;
+}
+
+.movie-detail {
+  margin-left: 40px;
+  width: 30%;
+}

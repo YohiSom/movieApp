@@ -1,7 +1,7 @@
 export interface Movies {
     title: string;
     episode_id: number;
-    opening_crawls: string;
+    opening_crawl: string;
     director: string;
     producer: string;
     release_date: string;
@@ -13,4 +13,7 @@ export interface Movies {
     created: string;
     edited: string;
     url: string;
+    isFavourite: boolean
   }
+
+  
