@@ -56,12 +56,12 @@ const MovieDetail: React.FC<Props> = ({
         <span className="title">Plot:</span> {opening_crawl}
       </div>
       {isFavourite && !favouriteLoader && (
-        <div onClick={unselectFavourite}>
+        <div onClick={unselectFavourite} className="heart">
           <FaHeart /> Click to remove from favourites
         </div>
       )}
       {!isFavourite && !favouriteLoader && (
-        <div onClick={selectFavourite}>
+        <div onClick={selectFavourite} className="heart">
           <FiHeart /> Add this movie to your favourites
         </div>
       )}
