@@ -91,4 +91,8 @@
     height: 59px;
     margin-top: 40px;
   }
+
+  .detail-plot {
+    width: none;
+  }
 }
