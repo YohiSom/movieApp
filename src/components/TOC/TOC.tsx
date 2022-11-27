@@ -11,7 +11,6 @@ const TOC: React.FC = () => {
     localStorage.getItem("favouriteMovies") || "[]"
   );
   const [movies, setMovies] = useState<Movies[]>([]);
-  // const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [favouriteLoader, setFavouriteLoader] = useState<boolean>(true);
   const [favouriteMovie, setFavouriteMovie] = useState<any[]>(
@@ -60,8 +59,6 @@ const TOC: React.FC = () => {
     }
   }, [movies]);
 
-  console.log(movies);
-
   const onSelectMovie = (id: number) => {
     const selectedMovie = movies.find((el) => el.episode_id == id);
     setMovie(selectedMovie);
@@ -86,14 +83,6 @@ const TOC: React.FC = () => {
     setFavouriteMovie(filterUnselectedMovie);
   };
 
-  // useEffect(() => {
-  //   if (isLoading) {
-  //     document.body.style.backgroundColor = "black";
-  //   } else {
-  //     document.body.style.backgroundColor = "white";
-  //   }
-  // }, [isLoading]);
-
   if (isLoading || movies === undefined || movie === null)
     return (
       <div className="loading">
@@ -110,7 +99,6 @@ const TOC: React.FC = () => {
             />
           </svg>
         </div>
-        {/* <img src={DarthVader} className="vader" /> */}
       </div>
     );
 
@@ -119,7 +107,6 @@ const TOC: React.FC = () => {
   return (
     <div className="movie-wrapper">
       <div className="movies-list">
-        {/* <div>Table of Movies</div> */}
         {movies.map((movie) => {
           return (
             <div key={movie.episode_id}>

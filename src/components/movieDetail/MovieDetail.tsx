@@ -28,9 +28,6 @@ const MovieDetail: React.FC<Props> = ({
   );
 
   useEffect(() => {
-    // const doesFavouriteExist = favouriteMovie.find(
-    //   (el) => el.movieId === episode_id
-    // );
     if (!doesFavouriteExist) {
       setIsFavourite(false);
     } else {
@@ -58,15 +55,6 @@ const MovieDetail: React.FC<Props> = ({
       <div className="detail-plot">
         <span className="title">Plot:</span> {opening_crawl}
       </div>
-      {/* {isFavourite ? (
-        <div onClick={unselectFavourite}>
-          <FaHeart /> Click to remove from favourite
-        </div>
-      ) : (
-        <div onClick={selectFavourite}>
-          {<FiHeart />} Add this movie to your favourites
-        </div>
-      )} */}
       {isFavourite && !favouriteLoader && (
         <div onClick={unselectFavourite}>
           <FaHeart /> Click to remove from favourites
