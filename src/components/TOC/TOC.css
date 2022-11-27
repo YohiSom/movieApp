@@ -258,4 +258,8 @@
     margin-bottom: 20px;
     padding: 10px;
   }
+
+  .star {
+    width: 25px;
+  }
 }
