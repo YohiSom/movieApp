@@ -4,23 +4,26 @@ import { Movies } from "../../assets/interfaces";
 import "./TOC.css";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import MovieDetail from "../movieDetail/MovieDetail";
-import { json } from "stream/consumers";
+import DarthVader from "../../assets/Star_Wars-Logo.wine.svg";
 
 const TOC: React.FC = () => {
   const localStorageFavourites = JSON.parse(
     localStorage.getItem("favouriteMovies") || "[]"
   );
   const [movies, setMovies] = useState<Movies[]>([]);
-  //   const [isFavourite, setIsFavourite] = useState<boolean>(false);
+  // const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [favouriteLoader, setFavouriteLoader] = useState<boolean>(true);
   const [favouriteMovie, setFavouriteMovie] = useState<any[]>(
     localStorageFavourites || []
   );
+  const [error, setError] = useState<string>("");
 
   const [movie, setMovie] = useState<Movies | undefined>(movies[0] || null);
 
   const getAllMovies = async () => {
     try {
+      setFavouriteLoader(true);
       const res = await moviesApi();
 
       let moviesArray = [];
@@ -38,12 +41,12 @@ const TOC: React.FC = () => {
         }
       }
 
-      //   const movies = res.map((el: {}) => ({ ...el, isFavourite }));
-
       setMovies(res);
       setIsLoading(false);
-    } catch (err) {
-      console.log(err);
+      setFavouriteLoader(false);
+    } catch (err: any) {
+      const message = err.message;
+      setError(message);
     }
   };
 
@@ -51,33 +54,13 @@ const TOC: React.FC = () => {
     getAllMovies();
   }, [favouriteMovie]);
 
-  //   const checkForFavourite = () => {
-  //     if (favouriteMovie.length > 0) {
-
-  //         const newMoviesArr = []
-  //         for (let i = 0; i < favouriteMovie.length; i++) {
-
-  //             const noFavourite = movies.filter((el)=> el.isFavourite !== favouriteMovie[i].movieId)
-  //             const favourites = movies.filter((el)=> el.isFavourite == favouriteMovie[i].movieId)
-
-  //             newMoviesArr.push(noFavourite, favourites)
-  //         //   for (let j = 0; j < movies.length; j++) {
-  //         //     if (favouriteMovie[i].movieId == movies[j].episode_id) {
-
-  //         //     }
-  //         //   }
-  //         }
-
-  //       }
-  //   }
-
   useEffect(() => {
     if (movies && movie == null) {
       setMovie(movies[0]);
     }
   }, [movies]);
 
-  console.log(movie);
+  console.log(movies);
 
   const onSelectMovie = (id: number) => {
     const selectedMovie = movies.find((el) => el.episode_id == id);
@@ -92,10 +75,6 @@ const TOC: React.FC = () => {
   useEffect(() => {
     if (favouriteMovie.length !== 0)
       localStorage.setItem("favouriteMovies", JSON.stringify(favouriteMovie));
-
-    // if (localStorageFavourites.length === 0 || !localStorageFavourites) {
-    //   setFavouriteMovie([]);
-    // }
   }, [favouriteMovie]);
 
   const unselectFavourite = () => {
@@ -107,13 +86,40 @@ const TOC: React.FC = () => {
     setFavouriteMovie(filterUnselectedMovie);
   };
 
+  // useEffect(() => {
+  //   if (isLoading) {
+  //     document.body.style.backgroundColor = "black";
+  //   } else {
+  //     document.body.style.backgroundColor = "white";
+  //   }
+  // }, [isLoading]);
+
   if (isLoading || movies === undefined || movie === null)
-    return <div>Loading...</div>;
+    return (
+      <div className="loading">
+        <div className="loader">
+          <svg className="circular" viewBox="25 25 50 50">
+            <circle
+              className="path"
+              cx="50"
+              cy="50"
+              r="20"
+              fill="none"
+              strokeWidth="2"
+              strokeMiterlimit="10"
+            />
+          </svg>
+        </div>
+        {/* <img src={DarthVader} className="vader" /> */}
+      </div>
+    );
+
+  if (error) return <div className="loading">{error}</div>;
 
   return (
     <div className="movie-wrapper">
       <div className="movies-list">
-        <div>Table of Movies</div>
+        {/* <div>Table of Movies</div> */}
         {movies.map((movie) => {
           return (
             <div key={movie.episode_id}>
@@ -123,6 +129,7 @@ const TOC: React.FC = () => {
                 </div>
                 <div
                   className="hover-movie"
+                  data-glitch={movie.title}
                   onClick={() => onSelectMovie(movie.episode_id)}
                 >
                   {" "}
@@ -140,6 +147,7 @@ const TOC: React.FC = () => {
             selectFavourite={selectFavourite}
             favouriteMovie={favouriteMovie}
             unselectFavourite={unselectFavourite}
+            favouriteLoader={favouriteLoader}
           />
         )}
       </div>

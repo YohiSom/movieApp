@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Movies } from "../../assets/interfaces";
 import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
+import "./movieDetail.css";
 
 interface Props {
   movie: Movies;
   selectFavourite: () => void;
   favouriteMovie: any[];
+  favouriteLoader: boolean;
   unselectFavourite: () => void;
 }
 
@@ -15,6 +17,7 @@ const MovieDetail: React.FC<Props> = ({
   selectFavourite,
   favouriteMovie,
   unselectFavourite,
+  favouriteLoader,
 }) => {
   const [isFavourite, setIsFavourite] = useState<boolean>();
   const { title, director, producer, release_date, opening_crawl, episode_id } =
@@ -37,18 +40,46 @@ const MovieDetail: React.FC<Props> = ({
 
   return (
     <div>
-      <div> {title}</div>
-      <div> {director}</div>
-      <div> {producer}</div>
-      <div> {release_date}</div>
-      <div> {opening_crawl}</div>
-      {isFavourite ? (
+      <div className="detail">
+        {" "}
+        <span className="title">Title:</span> {title}
+      </div>
+      <div className="detail">
+        {" "}
+        <span className="title">Director:</span> {director}
+      </div>
+      <div className="detail">
+        {" "}
+        <span className="title">Producer:</span> {producer}
+      </div>
+      <div className="detail">
+        <span className="title">Release Date:</span> {release_date}
+      </div>
+      <div className="detail-plot">
+        <span className="title">Plot:</span> {opening_crawl}
+      </div>
+      {/* {isFavourite ? (
         <div onClick={unselectFavourite}>
-          <FaHeart /> Click to removie from favourite
+          <FaHeart /> Click to remove from favourite
         </div>
       ) : (
-        <div onClick={selectFavourite}>{<FiHeart />}</div>
+        <div onClick={selectFavourite}>
+          {<FiHeart />} Add this movie to your favourites
+        </div>
+      )} */}
+      {isFavourite && !favouriteLoader && (
+        <div onClick={unselectFavourite}>
+          <FaHeart /> Click to remove from favourites
+        </div>
       )}
+      {!isFavourite && !favouriteLoader && (
+        <div onClick={selectFavourite}>
+          <FiHeart /> Add this movie to your favourites
+        </div>
+      )}
+      <div className="spinner-wrapper">
+        {favouriteLoader && <div className="spinner"></div>}
+      </div>
     </div>
   );
 };

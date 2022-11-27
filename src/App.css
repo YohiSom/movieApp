@@ -6,3 +6,27 @@ html {
 * {
   box-sizing: border-box;
 }
+
+body {
+  font-family: nimbus-sans, sans-serif;
+  font-size: 23px;
+  background: url("./assets/firstOrder.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  color: #fff;
+}
+
+@media screen and (max-width: 1619px) {
+  body {
+    font-family: nimbus-sans, sans-serif;
+    font-size: 23px;
+    background: url("./assets/1347951.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: #fff;
+  }
+}
