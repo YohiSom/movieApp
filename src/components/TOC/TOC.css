@@ -24,6 +24,7 @@
 
 .movie-wrapper {
   display: flex;
+  width: 100%;
 }
 
 .movie-detail {
