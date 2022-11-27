@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { moviesApi } from "../../API/api";
 import { Movies } from "../../assets/interfaces";
 import "./TOC.css";
-import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { AiOutlineStar } from "react-icons/ai";
 import MovieDetail from "../movieDetail/MovieDetail";
-import DarthVader from "../../assets/Star_Wars-Logo.wine.svg";
 
 const TOC: React.FC = () => {
   const localStorageFavourites = JSON.parse(
